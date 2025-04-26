@@ -1,5 +1,24 @@
 import { useState } from "react";
 
+const Display = (props) => {
+  return <h1>{props.text}</h1>;
+};
+const Statistics = (props) => {
+  return (
+    <>
+      <div>
+        {props.statistics.map((statistic, index) => {
+          return (
+            <div key={index}>
+              {statistic.text} {statistic.good}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
+
 const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -44,22 +63,26 @@ const App = () => {
     setPositive(positve);
   };
 
+  const statistics = [
+    { text: "good", good: good },
+    { text: "neutral", good: neutral },
+    { text: "bad", good: bad },
+    { text: "all", good: all },
+    { text: "average", good: average },
+    { text: "positive", good: positive },
+  ];
+
   return (
     <div>
-      <h1>give feeedback</h1>
+      <Display text="give feedback" />
 
       <button onClick={handleGood}>good</button>
       <button onClick={handleNeutral}>neutral</button>
       <button onClick={handleBad}>bad</button>
 
-      <h1>statistics</h1>
+      <Display text="statistics" />
 
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>all {all}</div>
-      <div>average {average}</div>
-      <div>positive {positive} %</div>
+      <Statistics statistics={statistics} />
     </div>
   );
 };
