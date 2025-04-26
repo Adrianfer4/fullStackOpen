@@ -4,6 +4,13 @@ const Display = (props) => {
   return <h1>{props.text}</h1>;
 };
 const Statistics = (props) => {
+  if(props.statistics[0].good === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    );
+  } 
   return (
     <>
       <div>
