@@ -3,8 +3,17 @@ import { useState } from "react";
 const Display = (props) => {
   return <h1>{props.text}</h1>;
 };
+
+const StatisticsLine = (props) => {
+  return (
+    <div>
+      {props.text} {props.value}
+    </div>
+  );
+}
+
 const Statistics = (props) => {
-  if(props.statistics[0].good === 0) {
+  if(props.statistics.every(value => value === 0)) {
     return (
       <div>
         No feedback given
@@ -12,19 +21,20 @@ const Statistics = (props) => {
     );
   } 
   return (
-    <>
       <div>
-        {props.statistics.map((statistic, index) => {
-          return (
-            <div key={index}>
-              {statistic.text} {statistic.good}
-            </div>
-          );
-        })}
+        <StatisticsLine text="good" value={props.statistics[0]} />
+        <StatisticsLine text="neutral" value={props.statistics[1]} />
+        <StatisticsLine text="bad" value={props.statistics[2]} />
+        <StatisticsLine text="all" value={props.statistics[3]} />
+        <StatisticsLine text="average" value={props.statistics[4]} />
+        <StatisticsLine text="positive" value={props.statistics[5]} />
       </div>
-    </>
   );
 };
+
+ const Button = (props) => {
+  return <button onClick={props.handleClick}>{props.name}</button>
+ }
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -71,21 +81,16 @@ const App = () => {
   };
 
   const statistics = [
-    { text: "good", good: good },
-    { text: "neutral", good: neutral },
-    { text: "bad", good: bad },
-    { text: "all", good: all },
-    { text: "average", good: average },
-    { text: "positive", good: positive },
+    good, neutral, bad, all, average, positive
   ];
 
   return (
     <div>
       <Display text="give feedback" />
 
-      <button onClick={handleGood}>good</button>
-      <button onClick={handleNeutral}>neutral</button>
-      <button onClick={handleBad}>bad</button>
+      <Button handleClick={handleGood} name="good" />
+      <Button handleClick={handleNeutral} name="neutral" />
+      <Button handleClick={handleBad} name="bad" />
 
       <Display text="statistics" />
 
