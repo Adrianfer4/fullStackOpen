@@ -17,7 +17,7 @@ const App = () => {
   const randomAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length);
     setSelected(randomIndex);
-  }
+  };
 
   return (
     <div>
