@@ -6,35 +6,36 @@ const Display = (props) => {
 
 const StatisticsLine = (props) => {
   return (
-    <div>
-      {props.text} {props.value}
-    </div>
-  );
-}
-
-const Statistics = (props) => {
-  if(props.statistics.every(value => value === 0)) {
-    return (
-      <div>
-        No feedback given
-      </div>
-    );
-  } 
-  return (
-      <div>
-        <StatisticsLine text="good" value={props.statistics[0]} />
-        <StatisticsLine text="neutral" value={props.statistics[1]} />
-        <StatisticsLine text="bad" value={props.statistics[2]} />
-        <StatisticsLine text="all" value={props.statistics[3]} />
-        <StatisticsLine text="average" value={props.statistics[4]} />
-        <StatisticsLine text="positive" value={props.statistics[5]} />
-      </div>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   );
 };
 
- const Button = (props) => {
-  return <button onClick={props.handleClick}>{props.name}</button>
- }
+const Statistics = (props) => {
+  if (props.statistics.every((value) => value === 0)) {
+    return (
+      <tr>
+        <td>No feedback given</td>
+      </tr>
+    );
+  }
+  return (
+    <>
+      <StatisticsLine text="good" value={props.statistics[0]} />
+      <StatisticsLine text="neutral" value={props.statistics[1]} />
+      <StatisticsLine text="bad" value={props.statistics[2]} />
+      <StatisticsLine text="all" value={props.statistics[3]} />
+      <StatisticsLine text="average" value={props.statistics[4]} />
+      <StatisticsLine text="positive" value={props.statistics[5] + " %"} />
+    </>
+  );
+};
+
+const Button = (props) => {
+  return <button onClick={props.handleClick}>{props.name}</button>;
+};
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -80,10 +81,6 @@ const App = () => {
     setPositive(positve);
   };
 
-  const statistics = [
-    good, neutral, bad, all, average, positive
-  ];
-
   return (
     <div>
       <Display text="give feedback" />
@@ -94,7 +91,13 @@ const App = () => {
 
       <Display text="statistics" />
 
-      <Statistics statistics={statistics} />
+      <table>
+        <tbody>
+          <Statistics
+            statistics={[good, neutral, bad, all, average, positive]}
+          />
+        </tbody>
+      </table>
     </div>
   );
 };
